@@ -8,12 +8,19 @@ export default defineConfig(({ mode }) => {
   const API_URL = env.VITE_APP_BASE_NAME || '/';
   const PORT = 3000;
 
+  const isDev = mode === 'development';
+// const env = loadEnv(mode, process.cwd(), '');
+
   return {
+    // base: isDev ? '/' : API_URL,
     base: API_URL,
     server: {
       open: true,
       port: PORT,
-      host: true
+      host: true,
+      watch: {
+        usePolling: true
+      }
     },
     preview: {
       open: true,

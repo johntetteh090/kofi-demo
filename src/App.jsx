@@ -5,6 +5,7 @@ import router from 'routes';
 import ThemeCustomization from 'themes';
 
 import ScrollTop from 'components/ScrollTop';
+import { Button } from '@mui/base';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 
@@ -13,7 +14,10 @@ export default function App() {
     <ThemeCustomization>
       <ScrollTop>
         <RouterProvider router={router} />
+        
       </ScrollTop>
     </ThemeCustomization>
+
+    
   );
 }

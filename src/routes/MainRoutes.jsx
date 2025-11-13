@@ -7,6 +7,9 @@ import DashboardLayout from 'layout/Dashboard';
 // render- Dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')));
 
+// const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')));
+const Meetings = Loadable(lazy(() => import('pages/meetings/index')));
+
 // render - color
 const Color = Loadable(lazy(() => import('pages/component-overview/color')));
 const Typography = Loadable(lazy(() => import('pages/component-overview/typography')));
@@ -24,6 +27,10 @@ const MainRoutes = {
     {
       path: '/',
       element: <DashboardDefault />
+    },
+    {
+      path: 'meetings',
+      element: <Meetings />
     },
     {
       path: 'dashboard',
