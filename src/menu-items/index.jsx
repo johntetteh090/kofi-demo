@@ -13,7 +13,7 @@ import usersAndRoles from './users-and-roles';
 
 const menuItems = {
   // items: [dashboard, pages, utilities, support]
-  items: [dashboard, meetings, actions, notifications, reports, usersAndRoles, support]
+  items: [dashboard, meetings, actions, notifications, reports, usersAndRoles]
 };
 
 export default menuItems;
