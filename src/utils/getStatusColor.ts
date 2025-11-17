@@ -20,7 +20,7 @@ export const getStatusStyle = (status: string) => {
         borderRadius: '16px',
         px: 2,
         py: 0.5,
-        fontWeight: 500,
+        fontWeight: 300,
         textTransform: 'capitalize',
         display: 'inline-block',
       };

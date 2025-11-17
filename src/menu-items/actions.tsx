@@ -19,7 +19,7 @@ const actions = {
       id: 'actions',
       title: 'Actions',
       type: 'item',
-      url: '/dashboard/default',
+      url: '/actions',
       icon: icons.FormOutlined,
       breadcrumbs: false
     }
