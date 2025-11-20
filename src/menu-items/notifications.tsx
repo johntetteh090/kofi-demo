@@ -18,7 +18,7 @@ const notifications = {
       id: 'notifications',
       title: 'Notifications',
       type: 'item',
-      url: '/dashboard/default',
+      url: '/notifications',
       icon: icons.BellOutlined,
       breadcrumbs: false
     }

@@ -10,6 +10,9 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')))
 // const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')));
 const Meetings = Loadable(lazy(() => import('pages/meetings/index')));
 const Actions = Loadable(lazy(() => import('pages/actions/index')));
+const Notifications = Loadable(lazy(() => import('pages/notifications/index')));
+const Reports = Loadable(lazy(() => import('pages/reports/index')));
+
 
 // render - color
 const Color = Loadable(lazy(() => import('pages/component-overview/color')));
@@ -36,6 +39,14 @@ const MainRoutes = {
     {
       path: 'actions',
       element: <Actions />
+    },
+    {
+      path: 'notifications',
+      element: <Notifications />
+    },
+    {
+      path: 'reports',
+      element: <Reports />
     },
     {
       path: 'dashboard',

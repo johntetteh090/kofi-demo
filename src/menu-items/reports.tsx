@@ -18,7 +18,7 @@ const reports = {
       id: 'reports',
       title: 'Reports',
       type: 'item',
-      url: '/dashboard/default',
+      url: '/reports',
       icon: icons.BarChartOutlined,
       breadcrumbs: false
     }

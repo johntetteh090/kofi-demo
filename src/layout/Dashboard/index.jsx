@@ -12,6 +12,9 @@ import Footer from './Footer';
 import Loader from 'components/Loader';
 import Breadcrumbs from 'components/@extended/Breadcrumbs';
 
+import { useLocation } from "react-router-dom";
+
+
 import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 
 // ==============================|| MAIN LAYOUT ||============================== //
@@ -27,13 +30,17 @@ export default function DashboardLayout() {
 
   if (menuMasterLoading) return <Loader />;
 
+  const location = useLocation();
+
+  
+
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
       <Header />
       <Drawer />
 
       <Box component="main" sx={{ width: 'calc(100% - 260px)', flexGrow: 1, 
-      backgroundColor: 'white',
+      backgroundColor: (location.pathname.endsWith("/notifications")) ? '#d9d9d909' : 'white',
          p: { xs: 2, sm: 3 } }}>
         <Toolbar sx={{ mt: 'inherit' }} />
         <Box
