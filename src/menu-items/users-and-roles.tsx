@@ -15,9 +15,9 @@ const usersAndRoles = {
   children: [
     {
       id: 'users-and-roles',
-      title: 'UsersAndRoles',
+      title: 'Users & Roles',
       type: 'item',
-      url: '/dashboard/default',
+      url: '/users-and-roles',
       icon: icons.TeamOutlined,
       breadcrumbs: false
     }

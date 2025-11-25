@@ -12,6 +12,8 @@ const Meetings = Loadable(lazy(() => import('pages/meetings/index')));
 const Actions = Loadable(lazy(() => import('pages/actions/index')));
 const Notifications = Loadable(lazy(() => import('pages/notifications/index')));
 const Reports = Loadable(lazy(() => import('pages/reports/index')));
+const UsersAndRoles = Loadable(lazy(() => import('pages/users-and-roles/index')));
+
 
 
 // render - color
@@ -47,6 +49,10 @@ const MainRoutes = {
     {
       path: 'reports',
       element: <Reports />
+    },
+    {
+      path: 'users-and-roles',
+      element: <UsersAndRoles />
     },
     {
       path: 'dashboard',
