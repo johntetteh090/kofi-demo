@@ -22,17 +22,19 @@ function createData(tracking_no, name, fat, carbs, protein) {
 }
 
 const rows = [
-  createData(84564564, 'Camera Lens', 40, 2, 40570),
-  createData(98764564, 'Laptop', 300, 0, 180139),
-  createData(98756325, 'Mobile', 355, 1, 90989),
-  createData(98652366, 'Handset', 50, 1, 10239),
-  createData(13286564, 'Computer Accessories', 100, 1, 83348),
-  createData(86739658, 'TV', 99, 0, 410780),
-  createData(13256498, 'Keyboard', 125, 2, 70999),
-  createData(98753263, 'Mouse', 89, 2, 10570),
-  createData(98753275, 'Desktop', 185, 1, 98063),
-  createData(98753291, 'Chair', 100, 0, 14001)
+  createData(84564564, 'Kofi Mensah', 'Meeting with the Managing Director', '2025-09-01'),
+  createData(98764564, 'Ama Serwaa', 'Consultation with the Managing Director', '2025-09-03'),
+  createData(98756325, 'Yaw Owusu', 'Requesting Approval from the Managing Director', '2025-09-05'),
+  createData(98652366, 'Esi Asante', 'Follow-up Session with the Managing Director', '2025-09-08'),
+  createData(13286564, 'Kwame Danquah', 'Contract Discussion with the Managing Director', '2025-09-09'),
+  createData(86739658, 'Akosua Adjei', 'Progress Review with the Managing Director', '2025-09-10'),
+  createData(13256498, 'Felix Tetteh', 'Scheduled Briefing with the Managing Director', '2025-09-11'),
+  createData(98753263, 'Doris Nyarko', 'Performance Review with the Managing Director', '2025-09-12'),
+  createData(98753275, 'Richmond Koomson', 'Project Presentation to the Managing Director', '2025-09-13'),
+  createData(98753291, 'Naomi Adu', 'General Meeting with the Managing Director', '2025-09-14')
 ];
+
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,36 +64,36 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'tracking_no',
+    id: 'Id',
     align: 'left',
     disablePadding: false,
-    label: 'Tracking No.'
+    label: 'ID'
   },
   {
-    id: 'name',
+    id: 'Applicant name',
     align: 'left',
     disablePadding: true,
-    label: 'Product Name'
+    label: 'Applicant Name'
   },
   {
-    id: 'fat',
-    align: 'right',
+    id: 'purpose',
+    align: 'left',
     disablePadding: false,
-    label: 'Total Order'
+    label: 'Purpose'
   },
   {
-    id: 'carbs',
+    id: 'dateBooked',
     align: 'left',
     disablePadding: false,
 
-    label: 'Status'
+    label: 'Date Booked'
   },
-  {
-    id: 'protein',
-    align: 'right',
-    disablePadding: false,
-    label: 'Total Amount'
-  }
+  // {
+  //   id: 'protein',
+  //   align: 'right',
+  //   disablePadding: false,
+  //   label: 'Total Amount'
+  // }
 ];
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
@@ -181,13 +183,14 @@ export default function OrderTable() {
                     <Link color="secondary">{row.tracking_no}</Link>
                   </TableCell>
                   <TableCell>{row.name}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
+                  <TableCell align="left">{row.fat}</TableCell>
                   <TableCell>
-                    <OrderStatus status={row.carbs} />
+                    {row.carbs}
+                    {/* <OrderStatus status={row.carbs} /> */}
                   </TableCell>
-                  <TableCell align="right">
+                  {/* <TableCell align="left">
                     <NumericFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               );
             })}

@@ -65,22 +65,22 @@ export default function IncomeAreaChart({ view }) {
   const visibleSeries = [
     {
       data: data1,
-      label: 'Page views',
+      label: 'Booked Meetings',
       showMark: false,
       area: true,
       id: 'page-views',
       color: theme.vars.palette.primary.main || '',
       visible: visibility['Page views']
     },
-    {
-      data: data2,
-      label: 'Sessions',
-      showMark: false,
-      area: true,
-      id: 'sessions',
-      color: theme.vars.palette.primary[700] || '',
-      visible: visibility['Sessions']
-    }
+    // {
+    //   data: data2,
+    //   label: 'Sessions',
+    //   showMark: false,
+    //   area: true,
+    //   id: 'sessions',
+    //   color: theme.vars.palette.primary[700] || '',
+    //   visible: visibility['Sessions']
+    // }
   ];
 
   return (

@@ -88,12 +88,20 @@ export default function Meetings() {
             overflow: "hidden"
           }}
         >
-          <TableContainer component={Paper} sx={{ boxShadow: "none" }}>
+          <TableContainer component={Paper} sx={{
+          width: '100%',
+          overflowX: 'auto',
+          position: 'relative',
+          display: 'block',
+          maxWidth: '100%',
+          '& td, & th': { whiteSpace: 'nowrap' }
+        }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow
                   sx={{
-                    "& > *": { textAlign: "center" }
+                    // "& > *": { textAlign: "center" },
+                    '&:last-child td, &:last-child th': { border: 0 }
                   }}
                 >
                   <TableCell align="center">ID</TableCell>
@@ -126,13 +134,13 @@ export default function Meetings() {
                             : "inherit"
                       },
                       "&:last-child td, &:last-child th": { border: 0 },
-                      "& > *": { textAlign: "left" }
+                      "& > *": { textAlign: "center" }
                     }}
                   >
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell>{row.employeeName}</TableCell>
-                    <TableCell>{row.purpose}</TableCell>
-                    <TableCell>{row.dateTime}</TableCell>
+                    <TableCell align="center">{row.id}</TableCell>
+                    <TableCell align="center">{row.employeeName}</TableCell>
+                    <TableCell align="center">{row.purpose}</TableCell>
+                    <TableCell align="center">{row.dateTime}</TableCell>
 
                     <TableCell align="center">
                       <Box

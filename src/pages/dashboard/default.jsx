@@ -25,6 +25,7 @@ import ReportAreaChart from 'sections/dashboard/default/ReportAreaChart';
 import UniqueVisitorCard from 'sections/dashboard/default/UniqueVisitorCard';
 import SaleReportCard from 'sections/dashboard/default/SaleReportCard';
 import OrdersTable from 'sections/dashboard/default/OrdersTable';
+import MeetingsPieChart from 'sections/dashboard/default/MeetingsPieChart';
 
 // assets
 import EllipsisOutlined from '@ant-design/icons/EllipsisOutlined';
@@ -81,16 +82,16 @@ export default function DashboardDefault() {
         <Typography variant="h5">Dashboard</Typography>
       </Grid>
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-        <AnalyticEcommerce title="Total Page Views" count="4,42,236" percentage={59.3} extra="35,000" />
+        <AnalyticEcommerce title="Total Booked Appointments" count="900" percentage={29.3} extra="350" />
       </Grid>
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-        <AnalyticEcommerce title="Total Users" count="78,250" percentage={70.5} extra="8,900" />
+        <AnalyticEcommerce title="Total Accepted Appointments" count="650" percentage={10.5} extra="90" />
       </Grid>
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-        <AnalyticEcommerce title="Total Order" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
+        <AnalyticEcommerce title="Total Declined Appointments" count="180" percentage={17.4} isLoss color="warning" extra="3" />
       </Grid>
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-        <AnalyticEcommerce title="Total Sales" count="35,078" percentage={27.4} isLoss color="warning" extra="20,395" />
+        <AnalyticEcommerce title="Total Pending Appointments" count="70" percentage={7.4} isLoss color="warning" extra="20" />
       </Grid>
       <Grid sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} size={{ md: 8 }} />
       {/* row 2 */}
@@ -100,12 +101,12 @@ export default function DashboardDefault() {
       <Grid size={{ xs: 12, md: 5, lg: 4 }}>
         <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
           <Grid>
-            <Typography variant="h5">Income Overview</Typography>
+            <Typography variant="h5">Appointments Overview</Typography>
           </Grid>
           <Grid />
         </Grid>
-        <MainCard sx={{ mt: 2 }} content={false}>
-          <Box sx={{ p: 3, pb: 0 }}>
+        <MainCard sx={{ mt: 2.3 }} content={false}>
+          {/* <Box sx={{ p: 3, pb: 0 }}>
             <Stack sx={{ gap: 2 }}>
               <Typography variant="h6" color="text.secondary">
                 This Week Statistics
@@ -113,14 +114,16 @@ export default function DashboardDefault() {
               <Typography variant="h3">$7,650</Typography>
             </Stack>
           </Box>
-          <MonthlyBarChart />
+          <MonthlyBarChart /> */}
+
+         <MeetingsPieChart />
         </MainCard>
       </Grid>
       {/* row 3 */}
-      <Grid size={{ xs: 12, md: 7, lg: 8 }}>
+      <Grid size={{ xs: 12, md: 12, lg: 12 }}>
         <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
           <Grid>
-            <Typography variant="h5">Recent Orders</Typography>
+            <Typography variant="h5">Upcoming Meetings List</Typography>
           </Grid>
           <Grid>
             <IconButton onClick={handleOrderMenuClick}>
@@ -145,7 +148,7 @@ export default function DashboardDefault() {
           <OrdersTable />
         </MainCard>
       </Grid>
-      <Grid size={{ xs: 12, md: 5, lg: 4 }}>
+      {/* <Grid size={{ xs: 12, md: 5, lg: 4 }}>
         <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
           <Grid>
             <Typography variant="h5">Analytics Report</Typography>
@@ -186,12 +189,12 @@ export default function DashboardDefault() {
           </List>
           <ReportAreaChart />
         </MainCard>
-      </Grid>
+      </Grid> */}
       {/* row 4 */}
-      <Grid size={{ xs: 12, md: 7, lg: 8 }}>
+      {/* <Grid size={{ xs: 12, md: 7, lg: 8 }}>
         <SaleReportCard />
-      </Grid>
-      <Grid size={{ xs: 12, md: 5, lg: 4 }}>
+      </Grid> */}
+      {/* <Grid size={{ xs: 12, md: 5, lg: 4 }}>
         <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
           <Grid>
             <Typography variant="h5">Transaction History</Typography>
@@ -303,7 +306,7 @@ export default function DashboardDefault() {
             </Button>
           </Stack>
         </MainCard>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

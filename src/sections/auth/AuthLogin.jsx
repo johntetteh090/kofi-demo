@@ -27,6 +27,9 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 
+import { useNavigate } from "react-router-dom";
+
+
 // ============================|| JWT - LOGIN ||============================ //
 
 export default function AuthLogin({ isDemo = false }) {
@@ -40,6 +43,9 @@ export default function AuthLogin({ isDemo = false }) {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const navigate = useNavigate();
+
 
   return (
     <>
@@ -136,7 +142,9 @@ export default function AuthLogin({ isDemo = false }) {
               </Grid>
               <Grid size={12}>
                 <AnimateButton>
-                  <Button fullWidth size="large" variant="contained" color="primary">
+                  <Button
+                  onClick={() => navigate("/")}
+                  fullWidth size="large" variant="contained" color="primary">
                     Login
                   </Button>
                 </AnimateButton>

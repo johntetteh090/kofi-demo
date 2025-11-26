@@ -13,6 +13,8 @@ const Actions = Loadable(lazy(() => import('pages/actions/index')));
 const Notifications = Loadable(lazy(() => import('pages/notifications/index')));
 const Reports = Loadable(lazy(() => import('pages/reports/index')));
 const UsersAndRoles = Loadable(lazy(() => import('pages/users-and-roles/index')));
+const Login = Loadable(lazy(() => import('pages/auth/Login')));
+
 
 
 
@@ -28,7 +30,7 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')))
 
 const MainRoutes = {
   path: '/',
-  element: <DashboardLayout />,
+  element: <Login />,
   children: [
     {
       path: '/',
