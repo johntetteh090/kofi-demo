@@ -13,6 +13,7 @@ const Actions = Loadable(lazy(() => import('pages/actions/index')));
 const Notifications = Loadable(lazy(() => import('pages/notifications/index')));
 const Reports = Loadable(lazy(() => import('pages/reports/index')));
 const UsersAndRoles = Loadable(lazy(() => import('pages/users-and-roles/index')));
+const BookAppointments = Loadable(lazy(() => import('pages/staffs/book-appointment/index')));
 const Login = Loadable(lazy(() => import('pages/auth/Login')));
 
 
@@ -29,11 +30,17 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')))
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
+  // path: '/',
+  // element: <Login />,
   path: '/',
-  element: <Login />,
+  element: <DashboardLayout />, 
   children: [
     {
-      path: '/',
+      path: 'book-appointment',
+      element: <BookAppointments />
+    },
+    {
+      path: 'dashboard',
       element: <DashboardDefault />
     },
     {
@@ -56,15 +63,15 @@ const MainRoutes = {
       path: 'users-and-roles',
       element: <UsersAndRoles />
     },
-    {
-      path: 'dashboard',
-      children: [
-        {
-          path: 'default',
-          element: <DashboardDefault />
-        }
-      ]
-    },
+    // {
+    //   path: 'dashboard',
+    //   children: [
+    //     {
+    //       path: 'default',
+    //       element: <DashboardDefault />
+    //     }
+    //   ]
+    // },
     {
       path: 'typography',
       element: <Typography />

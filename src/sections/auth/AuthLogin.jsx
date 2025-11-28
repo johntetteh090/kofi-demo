@@ -28,6 +28,9 @@ import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 
 import { useNavigate } from "react-router-dom";
+import ListItemButton from '@mui/material/ListItemButton';
+
+
 
 
 // ============================|| JWT - LOGIN ||============================ //
@@ -49,7 +52,7 @@ export default function AuthLogin({ isDemo = false }) {
 
   return (
     <>
-      <Formik
+       <Formik
         initialValues={{
           email: 'info@codedthemes.com',
           password: '123456',
@@ -143,17 +146,20 @@ export default function AuthLogin({ isDemo = false }) {
               <Grid size={12}>
                 <AnimateButton>
                   <Button
-                  onClick={() => navigate("/")}
-                  fullWidth size="large" variant="contained" color="primary">
+                  onClick={() => navigate("/dashboard")}
+                  fullWidth size="large" 
+                  variant="contained" 
+                  color="primary">
                     Login
                   </Button>
+
                 </AnimateButton>
               </Grid>
             </Grid>
           </form>
         )}
       </Formik>
-    </>
+    </> 
   );
 }
 
