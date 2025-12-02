@@ -35,10 +35,7 @@ const MainRoutes = {
   path: '/',
   element: <DashboardLayout />, 
   children: [
-    {
-      path: 'book-appointment',
-      element: <BookAppointments />
-    },
+    
     {
       path: 'dashboard',
       element: <DashboardDefault />

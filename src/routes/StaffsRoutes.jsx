@@ -7,8 +7,6 @@ import Loadable from 'components/Loadable';
 const BookAppointments = Loadable(lazy(() => import('pages/staffs/book-appointment/index')));
 
 
-// ==============================|| AUTH ROUTING ||============================== //
-
 const StaffsRoutes = {
     path: '/',
     children: [
