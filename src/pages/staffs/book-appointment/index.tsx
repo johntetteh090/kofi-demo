@@ -1,330 +1,671 @@
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import {
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Typography,
+    Card,
+    Grid,
+    Chip,
+    Avatar,
+    Stack,
+    Divider,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    MenuItem,
+    Select,
+    FormControl,
+    InputLabel,
+    Backdrop,
+} from "@mui/material";
 import { Box } from "@mui/system";
-// import AuthWrapper from 'sections/auth/AuthWrapper';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Grid from "@mui/material/Grid";
-
-
-
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { getStatusStyle } from "utils/getStatusColor";
-import CarouselBanner from "components/CarouselBanner";
-import UpcomingAppointments from "components/UpcomingAppointments";
+import MainCard from "components/MainCard";
+import {
+    CalendarOutlined,
+    CheckCircleOutlined,
+    ClockCircleOutlined,
+    CloseCircleOutlined,
+    PlusOutlined,
+    UserOutlined,
+    FileTextOutlined,
+    TrophyOutlined,
+    BarChartOutlined
+} from "@ant-design/icons";
+
+interface AppointmentData {
+    id: string;
+    bookedDate: string;
+    ActionDate: string;
+    purpose: string;
+    status: string;
+    priority?: "High" | "Medium" | "Low";
+}
 
 function createData(
     id: string,
     bookedDate: string,
     ActionDate: string,
     purpose: string,
-    status: string
-) {
-    return { id, bookedDate, purpose, ActionDate, status };
+    status: string,
+    priority?: "High" | "Medium" | "Low"
+): AppointmentData {
+    return { id, bookedDate, purpose, ActionDate, status, priority };
 }
 
-const rows = [
-    createData("APT-10293", "Nov 04, 2025 – 09:30 AM", "Nov 14, 2025 – 01:00 PM", "Budget Review Meeting", "Pending"),
-    createData("APT-94821", "Dec 11, 2025 – 02:15 PM", "Dec 21, 2025 – 09:00 AM", "Staff Performance Check-In", "Accepted"),
-    createData("APT-56203", "Oct 19, 2025 – 11:00 AM", "Oct 29, 2025 – 03:30 PM", "IT Security Audit Update", "Declined"),
-    createData("APT-78344", "Jan 07, 2026 – 08:45 AM", "Jan 17, 2026 – 04:00 PM", "Marketing Strategy Session", "Pending"),
-    createData("APT-44210", "Aug 23, 2025 – 01:30 PM", "Sep 02, 2025 – 12:00 PM", "Quarterly Goals Discussion", "Accepted"),
-
+const rows: AppointmentData[] = [
+    createData("APT-10293", "Nov 04, 2025 – 09:30 AM", "Nov 14, 2025 – 01:00 PM", "Budget Review Meeting", "Pending", "High"),
+    createData("APT-94821", "Dec 11, 2025 – 02:15 PM", "Dec 21, 2025 – 09:00 AM", "Staff Performance Check-In", "Accepted", "Medium"),
+    createData("APT-56203", "Oct 19, 2025 – 11:00 AM", "Oct 29, 2025 – 03:30 PM", "IT Security Audit Update", "Declined", "Low"),
+    createData("APT-78344", "Jan 07, 2026 – 08:45 AM", "Jan 17, 2026 – 04:00 PM", "Marketing Strategy Session", "Pending", "High"),
+    createData("APT-44210", "Aug 23, 2025 – 01:30 PM", "Sep 02, 2025 – 12:00 PM", "Quarterly Goals Discussion", "Accepted", "Medium"),
 ];
 
 export default function BookAppointments() {
-
     const [openBooking, setOpenBooking] = useState(false);
+    const [formData, setFormData] = useState({
+        purpose: "",
+        meetingDate: "",
+        priority: "Medium",
+        duration: "30"
+    });
 
+    // Calculate statistics
+    const stats = useMemo(() => {
+        const total = rows.length;
+        const pending = rows.filter(r => r.status.toLowerCase() === "pending").length;
+        const accepted = rows.filter(r => r.status.toLowerCase() === "accepted").length;
+        const declined = rows.filter(r => r.status.toLowerCase() === "declined").length;
+        const successRate = total > 0 ? Math.round((accepted / total) * 100) : 0;
+        const avgResponseTime = "2.5 days"; // Mock data
 
-    return (
+        return { total, pending, accepted, declined, successRate, avgResponseTime };
+    }, []);
 
-        <>
+    const handleInputChange = (field: string, value: string) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    };
 
+    const handleSubmit = () => {
+        // Handle form submission
+        console.log("Submitting booking:", formData);
+        setOpenBooking(false);
+        setFormData({ purpose: "", meetingDate: "", priority: "Medium", duration: "30" });
+    };
 
-            <Box
-                sx={{
-                    minHeight: '100%',
-                    width: '100%',
-                    backgroundColor: 'white',
-                    paddingX: 7,
-                    paddingY: 4,
-
-
-                }}>
-
-                <Box
-                    sx={{
-                        flex: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        alignContent: 'center',
-                        display: 'flex',
-
-                    }}>
-
-                    <Box>
-                        <Typography sx={{
-                            fontWeight: 800,
-                            fontSize: 20,
-                            color: 'black',
-                            lineHeight: 0.2
-                        }}>
-                            Welcome Mr. John Doe
+    const StatCard = ({ 
+        title, 
+        value, 
+        icon, 
+        color, 
+        subtitle 
+    }: { 
+        title: string; 
+        value: string | number; 
+        icon: React.ReactNode; 
+        color: string;
+        subtitle?: string;
+    }) => (
+        <Card
+            sx={{
+                p: 3,
+                borderRadius: 3,
+                height: "100%",
+                background: `linear-gradient(135deg, ${color}08 0%, ${color}03 100%)`,
+                border: `1px solid ${color}20`,
+                position: "relative",
+                overflow: "hidden",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: `0 8px 24px ${color}25`,
+                    borderColor: `${color}40`,
+                },
+                "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: 4,
+                    background: `linear-gradient(90deg, ${color} 0%, ${color}80 100%)`,
+                },
+            }}
+        >
+            <Stack direction="row" spacing={2.5} alignItems="flex-start" justifyContent="space-between">
+                <Box sx={{ flex: 1, zIndex: 1 }}>
+                    <Typography 
+                        variant="body2" 
+                        color="text.secondary" 
+                        sx={{ 
+                            mb: 1, 
+                            fontWeight: 600,
+                            textTransform: "uppercase",
+                            letterSpacing: 0.5,
+                            fontSize: 11,
+                        }}
+                    >
+                        {title}
+                    </Typography>
+                    <Typography 
+                        variant="h3" 
+                        sx={{ 
+                            fontWeight: 800, 
+                            color: color, 
+                            mb: 0.5,
+                            lineHeight: 1.2,
+                        }}
+                    >
+                        {value}
+                    </Typography>
+                    {subtitle && (
+                        <Typography 
+                            variant="caption" 
+                            color="text.secondary"
+                            sx={{ 
+                                fontWeight: 500,
+                                fontSize: 12,
+                            }}
+                        >
+                            {subtitle}
                         </Typography>
+                    )}
+                </Box>
+                <Avatar
+                    sx={{
+                        bgcolor: `${color}15`,
+                        color: color,
+                        width: 64,
+                        height: 64,
+                        border: `2px solid ${color}20`,
+                        boxShadow: `0 4px 12px ${color}20`,
+                    }}
+                >
+                    {icon}
+                </Avatar>
+            </Stack>
+        </Card>
+    );
 
-                        <Typography sx={{
-                            color: 'rgba(0, 0, 0, 0.6)',
-                            fontSize: 14,
-                            fontWeight: 200,
-                            mt: 0.9,
-                            // lineHeight: 0.2
-                        }}>
-                            Johndoe@torghana.gov.gh
+    const InsightCard = ({ 
+        title, 
+        value, 
+        icon, 
+        color = "primary" 
+    }: { 
+        title: string; 
+        value: string | number; 
+        icon: React.ReactNode; 
+        color?: string;
+    }) => {
+        const colorMap: Record<string, string> = {
+            success: "#2e7d32",
+            warning: "#ed6c02",
+            info: "#1976d2",
+            primary: "#1976d2",
+        };
+        const cardColor = colorMap[color] || color;
+        
+        return (
+            <Card
+                sx={{
+                    p: 2.5,
+                    borderRadius: 3,
+                    height: "100%",
+                    background: `linear-gradient(135deg, ${cardColor}08 0%, ${cardColor}03 100%)`,
+                    border: `1px solid ${cardColor}20`,
+                    position: "relative",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    "&:hover": {
+                        transform: "translateY(-4px)",
+                        boxShadow: `0 8px 24px ${cardColor}25`,
+                        borderColor: `${cardColor}40`,
+                    },
+                }}
+            >
+                <Stack direction="row" spacing={2.5} alignItems="center">
+                    <Avatar 
+                        sx={{ 
+                            bgcolor: `${cardColor}15`, 
+                            color: cardColor, 
+                            width: 56, 
+                            height: 56,
+                            border: `2px solid ${cardColor}20`,
+                            boxShadow: `0 4px 12px ${cardColor}20`,
+                        }}
+                    >
+                        {icon}
+                    </Avatar>
+                    <Box sx={{ flex: 1 }}>
+                        <Typography 
+                            variant="body2" 
+                            color="text.secondary" 
+                            sx={{ 
+                                mb: 0.75,
+                                fontWeight: 600,
+                                fontSize: 12,
+                            }}
+                        >
+                            {title}
+                        </Typography>
+                        <Typography 
+                            variant="h4" 
+                            sx={{ 
+                                fontWeight: 700,
+                                color: cardColor,
+                            }}
+                        >
+                            {value}
                         </Typography>
                     </Box>
+                </Stack>
+            </Card>
+        );
+    };
 
+    return (
+        <Box
+            sx={{
+                minHeight: "100vh",
+                width: "100%",
+                backgroundColor: "#f5f7fa",
+                paddingX: { xs: 2, sm: 4, md: 6, lg: 8 },
+                paddingY: 4,
+            }}
+        >
 
-                    {/* Right Button */}
-                    <Button
-                        variant="contained"
-                        // startIcon={<PlusOutlined />}
-                        onClick={() => setOpenBooking(true)}
+            {/* Header Section */}
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    mb: 4,
+                    flexWrap: "wrap",
+                    gap: 2,
+                }}
+            >
+                <Box>
+                    <Typography
                         sx={{
-                            textTransform: "none",
-                            borderRadius: 2,
-                            fontWeight: 600
+                            fontWeight: 700,
+                            fontSize: { xs: 24, md: 28 },
+                            color: "text.primary",
+                            mb: 0.5,
                         }}
                     >
-                        Book Meeting
-                    </Button>
-
-                </Box>
-
-                <CarouselBanner />
-
-                <Box sx={{ mt: 7 }}>
-                    <Typography sx={{ fontWeight: 600, fontSize: 18 }}>
-                        Upcoming Appointment Reminders
+                        Book Appointment with Managing Director
                     </Typography>
-
-                    <Grid container spacing={2} sx={{ mt: 4 }}>
-                        {[1, 2, 3, 4,].map((item) => (
-                            <Box key={item}>
-                                <UpcomingAppointments
-                                    title={`Meeting with Client ${item}`}
-                                    status={item % 2 === 0 ? "pending" : "accepted"}
-                                    applicant={`Client ${item}`}
-                                    purpose="Project Discussion"
-                                    date="Nov 20, 2025 • 10:00 AM"
-                                />
-                            </Box>
-                        ))}
-                    </Grid>
+                    <Typography
+                        sx={{
+                            color: "text.secondary",
+                            fontSize: 14,
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                        }}
+                    >
+                        <UserOutlined style={{ fontSize: 14 }} />
+                        Senior Manager Portal
+                    </Typography>
                 </Box>
 
-
-
-
-
-                {/* Table Container */}
-                <Box
-                    component="section"
+                <Button
+                    variant="contained"
+                    startIcon={<PlusOutlined />}
+                    onClick={() => setOpenBooking(true)}
                     sx={{
-                        backgroundColor: "white",
-                        borderRadius: 4,
-                        boxShadow: "none",
-                        overflow: "hidden",
-                        marginTop: 4,
-
+                        textTransform: "none",
+                        borderRadius: 2,
+                        fontWeight: 600,
+                        px: 3,
+                        py: 1.5,
+                        fontSize: 15,
                     }}
                 >
-
-                    <Typography sx={{
-                        fontWeight: 500,
-                        fontSize: 16,
-                        color: 'black',
-                        // paddingX: 3,
-                        paddingY: 2
-                    }}>
-                        Your last 5 meetings
-                    </Typography>
-                    <TableContainer component={Paper} sx={{
-                        boxShadow: "none",
-                        border: '1px solid #E0E0E0',
-                        overflow: 'hidden',
-                        mb: 5
-                    }}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow
-
-                                >
-                                    <TableCell align="center">ID</TableCell>
-                                    <TableCell align="center">Booked date</TableCell>
-                                    <TableCell align="center">Decision date</TableCell>
-                                    <TableCell align="center">Purpose</TableCell>
-                                    <TableCell align="center">Status</TableCell>
-                                </TableRow>
-                            </TableHead>
-
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        sx={{
-                                            cursor:
-                                                row.status.toLowerCase() === "declined"
-                                                    ? "pointer"
-                                                    : "default",
-                                            "&:hover": {
-                                                backgroundColor:
-                                                    row.status.toLowerCase() === "declined"
-                                                        ? "#fff5f5"
-                                                        : "inherit"
-                                            },
-                                            "&:last-child td, &:last-child th": { border: 0 },
-                                        }}
-                                    >
-                                        <TableCell align="center" sx={{
-                                            color: 'rgba(0,0,0,0.6)'
-                                        }}>{row.id}</TableCell>
-                                        <TableCell align="center">{row.bookedDate}</TableCell>
-                                        <TableCell align="center">{row.ActionDate}</TableCell>
-                                        <TableCell align="center">{row.purpose}</TableCell>
-
-                                        <TableCell align="center">
-                                            
-
-                                            <Box
-                                                sx={{
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    gap: 1,            // spacing between dot and text
-                                                }}
-                                            >
-                                                {/* Status Dot */}
-                                                <Box
-                                                    sx={{
-                                                        width: 7,
-                                                        height: 7,
-                                                        borderRadius: "50%",
-                                                        backgroundColor: getStatusStyle(row.status).color,
-                                                    }}
-                                                />
-
-                                                {/* Status Text */}
-                                                <Typography sx={{
-                                                    fontSize: 14, fontWeight: 500,
-                                                    color: getStatusStyle(row.status).color
-                                                }}>
-                                                    {row.status}
-                                                </Typography>
-                                            </Box>
-
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Box>
+                    New Booking Request
+                </Button>
             </Box>
 
-            {/* Blur Overlay + Popup */}
-            {openBooking && (
-                <Box
-                    sx={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100vw",
-                        height: "100vh",
-                        backdropFilter: "blur(6px)",
-                        backgroundColor: "rgba(0,0,0,0.4)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 2000
-                    }}
-                >
-                    {/* Popup Card */}
-                    <Box
-                        sx={{
-                            width: 400,
-                            backgroundColor: "white",
-                            borderRadius: 3,
-                            p: 4,
-                            boxShadow: 5,
-                        }}
-                    >
-                        <Typography sx={{ fontWeight: 600, fontSize: 18, mb: 2 }}>
-                            Book a Meeting
-                        </Typography>
+            {/* Statistics Cards */}
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard
+                        title="Total Bookings"
+                        value={stats.total}
+                        icon={<CalendarOutlined style={{ fontSize: 24 }} />}
+                        color="#1976d2"
+                        subtitle="All time requests"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard
+                        title="Pending"
+                        value={stats.pending}
+                        icon={<ClockCircleOutlined style={{ fontSize: 24 }} />}
+                        color="#ed6c02"
+                        subtitle="Awaiting response"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard
+                        title="Accepted"
+                        value={stats.accepted}
+                        icon={<CheckCircleOutlined style={{ fontSize: 24 }} />}
+                        color="#2e7d32"
+                        subtitle="Confirmed meetings"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <StatCard
+                        title="Declined"
+                        value={stats.declined}
+                        icon={<CloseCircleOutlined style={{ fontSize: 24 }} />}
+                        color="#d32f2f"
+                        subtitle="Not approved"
+                    />
+                </Grid>
+            </Grid>
 
+            {/* Insights Section */}
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+                <Grid item xs={12} md={4}>
+                    <InsightCard
+                        title="Success Rate"
+                        value={`${stats.successRate}%`}
+                        icon={<TrophyOutlined style={{ fontSize: 24 }} />}
+                        color="success"
+                    />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <InsightCard
+                        title="Avg Response Time"
+                        value={stats.avgResponseTime}
+                        icon={<ClockCircleOutlined style={{ fontSize: 24 }} />}
+                        color="warning"
+                    />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <InsightCard
+                        title="This Month"
+                        value={stats.total}
+                        icon={<BarChartOutlined style={{ fontSize: 24 }} />}
+                        color="info"
+                    />
+                </Grid>
+            </Grid>
+
+
+
+
+
+            {/* Appointments Table */}
+            <MainCard
+                title={
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                        <FileTextOutlined />
+                        <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                            Recent Booking Requests
+                        </Typography>
+                    </Stack>
+                }
+                sx={{ mb: 4 }}
+            >
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell sx={{ fontWeight: 600 }}>Appointment ID</TableCell>
+                                <TableCell sx={{ fontWeight: 600 }}>Booked Date</TableCell>
+                                <TableCell sx={{ fontWeight: 600 }}>Meeting Date</TableCell>
+                                <TableCell sx={{ fontWeight: 600 }}>Purpose</TableCell>
+                                <TableCell sx={{ fontWeight: 600 }}>Priority</TableCell>
+                                <TableCell align="center" sx={{ fontWeight: 600 }}>Status</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    sx={{
+                                        "&:hover": {
+                                            backgroundColor: "action.hover",
+                                        },
+                                        "&:last-child td": { border: 0 },
+                                    }}
+                                >
+                                    <TableCell>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{
+                                                fontFamily: "monospace",
+                                                fontWeight: 600,
+                                                color: "primary.main",
+                                            }}
+                                        >
+                                            {row.id}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography variant="body2">{row.bookedDate}</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                                            {row.ActionDate}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography variant="body2">{row.purpose}</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Chip
+                                            label={row.priority || "Medium"}
+                                            size="small"
+                                            color={
+                                                row.priority === "High"
+                                                    ? "error"
+                                                    : row.priority === "Medium"
+                                                    ? "warning"
+                                                    : "default"
+                                            }
+                                            sx={{ fontWeight: 500 }}
+                                        />
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <Stack
+                                            direction="row"
+                                            alignItems="center"
+                                            justifyContent="center"
+                                            spacing={1}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    width: 8,
+                                                    height: 8,
+                                                    borderRadius: "50%",
+                                                    backgroundColor: getStatusStyle(row.status).color,
+                                                    boxShadow: `0 0 8px ${getStatusStyle(row.status).color}60`,
+                                                }}
+                                            />
+                                            <Chip
+                                                label={row.status}
+                                                size="small"
+                                                icon={
+                                                    row.status.toLowerCase() === "accepted" ? (
+                                                        <CheckCircleOutlined style={{ fontSize: 14 }} />
+                                                    ) : row.status.toLowerCase() === "pending" ? (
+                                                        <ClockCircleOutlined style={{ fontSize: 14 }} />
+                                                    ) : (
+                                                        <CloseCircleOutlined style={{ fontSize: 14 }} />
+                                                    )
+                                                }
+                                                sx={{
+                                                    backgroundColor: getStatusStyle(row.status).backgroundColor,
+                                                    color: getStatusStyle(row.status).color,
+                                                    fontWeight: 600,
+                                                    fontSize: 12,
+                                                    height: 28,
+                                                    border: `1px solid ${getStatusStyle(row.status).color}30`,
+                                                    boxShadow: `0 2px 8px ${getStatusStyle(row.status).color}15`,
+                                                    "& .MuiChip-icon": {
+                                                        color: getStatusStyle(row.status).color,
+                                                    },
+                                                }}
+                                            />
+                                        </Stack>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </MainCard>
+
+            {/* Booking Dialog */}
+            <Dialog
+                open={openBooking}
+                onClose={() => setOpenBooking(false)}
+                maxWidth="sm"
+                fullWidth
+                slots={{
+                    backdrop: Backdrop,
+                }}
+                slotProps={{
+                    backdrop: {
+                        sx: {
+                            backgroundColor: "rgba(0, 0, 0, 0.5)",
+                            backdropFilter: "blur(8px)",
+                            WebkitBackdropFilter: "blur(8px)",
+                        },
+                    },
+                }}
+                PaperProps={{
+                    sx: {
+                        borderRadius: 3,
+                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12)",
+                    },
+                }}
+            >
+                <DialogTitle>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                        <CalendarOutlined style={{ fontSize: 20 }} />
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                            Book Meeting with Managing Director
+                        </Typography>
+                    </Stack>
+                </DialogTitle>
+                <Divider />
+                <DialogContent sx={{ pt: 3 }}>
+                    <Stack spacing={3}>
                         <TextField
                             fullWidth
-                            // label="Email"
-                            variant="outlined"
-                            value="Sam Doe"
+                            label="Your Name"
+                            value="John Doe"
                             InputProps={{
                                 readOnly: true,
-                                sx: {
-                                    backgroundColor: '#f5f5f5',   // light grey
-                                }
+                                startAdornment: <UserOutlined style={{ marginRight: 8, color: "text.secondary" }} />,
                             }}
-                            sx={{ mb: 2 }}
+                            sx={{
+                                "& .MuiOutlinedInput-root": {
+                                    backgroundColor: "action.hover",
+                                },
+                            }}
                         />
 
                         <TextField
                             fullWidth
-                            // label="Email"
-                            variant="outlined"
+                            label="Email Address"
                             value="johndoe@torghana.gov.gh"
                             InputProps={{
                                 readOnly: true,
-                                sx: {
-                                    backgroundColor: '#f5f5f5',   // light grey
-                                }
                             }}
-                            sx={{ mb: 2 }}
+                            sx={{
+                                "& .MuiOutlinedInput-root": {
+                                    backgroundColor: "action.hover",
+                                },
+                            }}
                         />
-
 
                         <TextField
                             fullWidth
-                            label="Purpose"
+                            label="Purpose of Meeting"
                             variant="outlined"
                             multiline
                             rows={4}
-                            sx={{ mb: 2 }}
+                            placeholder="Please provide a detailed description of the meeting purpose..."
+                            value={formData.purpose}
+                            onChange={(e) => handleInputChange("purpose", e.target.value)}
+                            required
                         />
 
-                        <TextField
-                            fullWidth
-                            type="datetime-local"
-                            label="Select Date For Meeting"
-                            InputLabelProps={{ shrink: true }}
-                            sx={{ mb: 3 }}
-                        />
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth
+                                    type="datetime-local"
+                                    label="Preferred Meeting Date & Time"
+                                    InputLabelProps={{ shrink: true }}
+                                    value={formData.meetingDate}
+                                    onChange={(e) => handleInputChange("meetingDate", e.target.value)}
+                                    required
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl fullWidth>
+                                    <InputLabel>Duration</InputLabel>
+                                    <Select
+                                        value={formData.duration}
+                                        label="Duration"
+                                        onChange={(e) => handleInputChange("duration", e.target.value)}
+                                    >
+                                        <MenuItem value="15">15 minutes</MenuItem>
+                                        <MenuItem value="30">30 minutes</MenuItem>
+                                        <MenuItem value="45">45 minutes</MenuItem>
+                                        <MenuItem value="60">1 hour</MenuItem>
+                                        <MenuItem value="90">1.5 hours</MenuItem>
+                                        <MenuItem value="120">2 hours</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
 
-                        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-                            <Button variant="text" onClick={() => setOpenBooking(false)}>
-                                Cancel
-                            </Button>
-
-                            <Button variant="contained">
-                                Submit
-                            </Button>
-                        </Box>
-                    </Box>
-                </Box>
-            )}
-
-        </>
-
-
-
-
+                        <FormControl fullWidth>
+                            <InputLabel>Priority Level</InputLabel>
+                            <Select
+                                value={formData.priority}
+                                label="Priority Level"
+                                onChange={(e) => handleInputChange("priority", e.target.value)}
+                            >
+                                <MenuItem value="Low">Low - Can be scheduled flexibly</MenuItem>
+                                <MenuItem value="Medium">Medium - Standard priority</MenuItem>
+                                <MenuItem value="High">High - Urgent matter</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Stack>
+                </DialogContent>
+                <Divider />
+                <DialogActions sx={{ p: 2.5 }}>
+                    <Button onClick={() => setOpenBooking(false)} sx={{ textTransform: "none" }}>
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        disabled={!formData.purpose || !formData.meetingDate}
+                        sx={{ textTransform: "none", px: 3 }}
+                    >
+                        Submit Request
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </Box>
     );
 }
 
