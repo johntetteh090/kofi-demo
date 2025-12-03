@@ -83,7 +83,7 @@ export default function Reports() {
             <Typography>Export</Typography>
           </Button>
 
-          
+
         </Box>
 
       </Box>
@@ -148,20 +148,27 @@ export default function Reports() {
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
+                        gap: 1,            // spacing between dot and text
                       }}
                     >
+                      {/* Status Dot */}
                       <Box
                         sx={{
-                          px: 2,
-                          py: 0.5,
-                          borderRadius: "16px",
-                          backgroundColor: getStatusStyle(row.status),
+                          width: 7,
+                          height: 7,
+                          borderRadius: "50%",
+                          backgroundColor: getStatusStyle(row.status).color,
                         }}
-                      >
+                      />
+
+                      {/* Status Text */}
+                      <Typography sx={{
+                        fontSize: 14, fontWeight: 500,
+                        color: getStatusStyle(row.status).color
+                      }}>
                         {row.status}
-                      </Box>
+                      </Typography>
                     </Box>
                   </TableCell>
                 </TableRow>

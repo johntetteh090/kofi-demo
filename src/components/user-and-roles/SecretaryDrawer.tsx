@@ -6,10 +6,12 @@ interface SecretaryDrawerProps {
 
     drawerOpen?: boolean;
     closeDrawer?: () => void;
+    title?: string;
+    subtitle?: string;
 }
 
 
-const SecretaryDrawer = ({ drawerOpen, closeDrawer }: SecretaryDrawerProps) => {
+const SecretaryDrawer = ({ drawerOpen, closeDrawer,title, subtitle }: SecretaryDrawerProps) => {
 
     return (
 
@@ -31,7 +33,7 @@ const SecretaryDrawer = ({ drawerOpen, closeDrawer }: SecretaryDrawerProps) => {
                 BackdropProps: {
                     sx: {
                         backdropFilter: "blur(6px)",
-                        backgroundColor: "rgba(92, 34, 34, 0.2)"
+                        backgroundColor: "rgba(0,0,0,0.2)"
                         // backgroundColor: "rgba(25, 118, 210, 0.2)"
                     }
                 }
@@ -40,11 +42,11 @@ const SecretaryDrawer = ({ drawerOpen, closeDrawer }: SecretaryDrawerProps) => {
 
 
             <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
-                Add a secretary
+                {title ?? 'Add a secretary'}
             </Typography>
 
             <Typography sx={{ fontSize: 14, mb: 2 }}>
-                Enter secretary details.
+                {subtitle ?? 'Enter secretary details.'}
             </Typography>
 
 

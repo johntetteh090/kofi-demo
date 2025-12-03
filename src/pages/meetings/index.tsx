@@ -47,7 +47,7 @@ export default function Meetings() {
 
   const [openReason, setOpenReason] = useState(false);
   const [selectedReason, setSelectedReason] = useState("");
-  const [selectedStatus,setSelectedStatus]=useState('All');
+  const [selectedStatus, setSelectedStatus] = useState('All');
 
 
   return (
@@ -66,16 +66,16 @@ export default function Meetings() {
           }}
         >
           {/* Left Text */}
-          <Typography sx={{fontSize: 18,fontWeight:700}}>Meetings</Typography>
+          <Typography sx={{ fontSize: 18, fontWeight: 700 }}>Meetings</Typography>
 
-          <CustomSelect 
-          items={[
-            { label: 'All', value: 'All' },
-            { label: 'Pending', value: 'pending' },
-          { label: 'Accepted', value: 'accepted' },
-          { label: 'Declined', value: 'declined' }]} 
-          value={selectedStatus}
-           onChange={(value) => setSelectedStatus(value) }/>
+          <CustomSelect
+            items={[
+              { label: 'All', value: 'All' },
+              { label: 'Pending', value: 'pending' },
+              { label: 'Accepted', value: 'accepted' },
+              { label: 'Declined', value: 'declined' }]}
+            value={selectedStatus}
+            onChange={(value) => setSelectedStatus(value)} />
         </Box>
 
         {/* Table Container */}
@@ -89,13 +89,13 @@ export default function Meetings() {
           }}
         >
           <TableContainer component={Paper} sx={{
-          width: '100%',
-          overflowX: 'auto',
-          position: 'relative',
-          display: 'block',
-          maxWidth: '100%',
-          '& td, & th': { whiteSpace: 'nowrap' }
-        }}>
+            width: '100%',
+            overflowX: 'auto',
+            position: 'relative',
+            display: 'block',
+            maxWidth: '100%',
+            '& td, & th': { whiteSpace: 'nowrap' }
+          }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow
@@ -146,20 +146,27 @@ export default function Meetings() {
                       <Box
                         sx={{
                           display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center"
+                          alignItems: "center",
+                          gap: 1,            // spacing between dot and text
                         }}
                       >
+                        {/* Status Dot */}
                         <Box
                           sx={{
-                            px: 2,
-                            py: 0.5,
-                            borderRadius: "16px",
-                            backgroundColor: getStatusStyle(row.status),
+                            width: 7,
+                            height: 7,
+                            borderRadius: "50%",
+                            backgroundColor: getStatusStyle(row.status).color,
                           }}
-                        >
+                        />
+
+                        {/* Status Text */}
+                        <Typography sx={{
+                          fontSize: 14, fontWeight: 500,
+                          color: getStatusStyle(row.status).color
+                        }}>
                           {row.status}
-                        </Box>
+                        </Typography>
                       </Box>
                     </TableCell>
                   </TableRow>
@@ -175,7 +182,7 @@ export default function Meetings() {
         fullWidth
         maxWidth="sm"
         onClose={() => setOpenReason(false)}>
-        <DialogTitle sx={{fontWeight:500, fontSize:18}}>Declined Reason</DialogTitle>
+        <DialogTitle sx={{ fontWeight: 500, fontSize: 18 }}>Declined Reason</DialogTitle>
         <DialogContent>
           <Typography sx={{ mt: 1 }}>{selectedReason}</Typography>
         </DialogContent>
