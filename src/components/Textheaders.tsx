@@ -8,7 +8,12 @@ interface TextHeaderProps {
 const TextHeader = ({ text }: TextHeaderProps) => {
     return (
 
-        <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
+        <Typography sx={{
+              fontWeight: 700,
+              fontSize: { xs: 24, md: 28 },
+              color: "text.primary",
+              mb: 0.5,
+            }}>
             {text}
         </Typography>
     )
