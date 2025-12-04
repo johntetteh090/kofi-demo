@@ -61,7 +61,7 @@ export default function UsersAndRoles() {
                     <UserRolesTable
                         dialogMainText={"Delete Secretary"}
                         dialogSubText="Are you sure you want to delete this secretary? 
-                    Actions taken cannot be reversed."/>
+                    Actions taken cannot be reversed." />
 
                     <Box sx={{
 
@@ -99,7 +99,7 @@ export default function UsersAndRoles() {
                     <UserRolesTable
                         dialogMainText={"Delete trusted Person"}
                         dialogSubText="Are you sure you want to delete this trusted person? 
-                    Actions taken cannot be reversed."/>
+                    Actions taken cannot be reversed." />
 
 
                     <Box sx={{
