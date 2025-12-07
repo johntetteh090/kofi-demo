@@ -41,20 +41,21 @@ export default function DashboardLayout() {
 
       <Box component="main" sx={{ width: 'calc(100% - 260px)', flexGrow: 1, 
       backgroundColor: (location.pathname.endsWith("/notifications")) ? '#d9d9d909' : 'white',
-         p: { xs: 2, sm: 3 } }}>
+         p: { xs: 2, sm: 0 } }}>
         <Toolbar sx={{ mt: 'inherit' }} />
         <Box
           sx={{
-            ...{ px: { xs: 0, sm: 2 } },
+            ...{ px: { xs: 0, sm: 6 } },
             position: 'relative',
             minHeight: 'calc(100vh - 110px)',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            backgroundColor: '#f5f7fa'
           }}
         >
           <Breadcrumbs />
           <Outlet />
-          <Footer />
+          {/* <Footer /> */}
         </Box>
       </Box>
     </Box>

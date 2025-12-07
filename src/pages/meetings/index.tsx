@@ -25,7 +25,6 @@ import {
   Divider,
   Backdrop,
   Card,
-  Grid,
 } from "@mui/material";
 import { Box as SystemBox } from "@mui/system";
 import MainCard from 'components/MainCard';
@@ -40,6 +39,7 @@ import {
   InfoCircleOutlined,
   FilterOutlined,
 } from "@ant-design/icons";
+import TextHeader from 'components/Textheaders';
 
 interface MeetingData {
   id: number;
@@ -138,53 +138,67 @@ export default function Meetings() {
     subtitle?: string;
   }) => (
     <Card
+      elevation={0}
       sx={{
-        p: 3,
-        borderRadius: 3,
+        p: 3.5,
+        borderRadius: 2,
         height: "100%",
-        background: `linear-gradient(135deg, ${color}08 0%, ${color}03 100%)`,
-        border: `1px solid ${color}20`,
+        bgcolor: "background.paper",
+        border: "1px solid",
+        borderColor: "divider",
         position: "relative",
         overflow: "hidden",
-        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        transition: "all 0.2s ease-in-out",
         "&:hover": {
-          transform: "translateY(-4px)",
-          boxShadow: `0 8px 24px ${color}25`,
-          borderColor: `${color}40`,
+          borderColor: color,
+          boxShadow: `0 4px 12px ${color}15`,
         },
-        "&::before": {
+        "&::after": {
           content: '""',
           position: "absolute",
           top: 0,
           left: 0,
-          right: 0,
-          height: 4,
-          background: `linear-gradient(90deg, ${color} 0%, ${color}80 100%)`,
+          width: 3,
+          height: "100%",
+          bgcolor: color,
         },
       }}
     >
-      <Stack direction="row" spacing={2.5} alignItems="flex-start" justifyContent="space-between">
-        <SystemBox sx={{ flex: 1, zIndex: 1 }}>
+      <Stack spacing={2}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography 
             variant="body2" 
             color="text.secondary" 
             sx={{ 
-              mb: 1, 
-              fontWeight: 600,
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
-              fontSize: 11,
+              fontWeight: 500,
+              fontSize: "0.875rem",
             }}
           >
             {title}
           </Typography>
+          <Box
+            sx={{
+              width: 48,
+              height: 48,
+              borderRadius: 1.5,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              bgcolor: `${color}10`,
+              color: color,
+            }}
+          >
+            {icon}
+          </Box>
+        </Stack>
+        <Box>
           <Typography 
-            variant="h3" 
+            variant="h4" 
             sx={{ 
-              fontWeight: 800, 
-              color: color, 
-              mb: 0.5,
+              fontWeight: 700, 
+              color: "text.primary",
               lineHeight: 1.2,
+              mb: 0.5,
             }}
           >
             {value}
@@ -194,26 +208,13 @@ export default function Meetings() {
               variant="caption" 
               color="text.secondary"
               sx={{ 
-                fontWeight: 500,
-                fontSize: 12,
+                fontSize: "0.75rem",
               }}
             >
               {subtitle}
             </Typography>
           )}
-        </SystemBox>
-        <Avatar
-          sx={{
-            bgcolor: `${color}15`,
-            color: color,
-            width: 64,
-            height: 64,
-            border: `2px solid ${color}20`,
-            boxShadow: `0 4px 12px ${color}20`,
-          }}
-        >
-          {icon}
-        </Avatar>
+        </Box>
       </Stack>
     </Card>
   );
@@ -224,8 +225,8 @@ export default function Meetings() {
         minHeight: "100vh",
         height: "100%",
         width: "100%",
-        backgroundColor: "#f5f7fa",
-        paddingX: { xs: 2, sm: 4, md: 6, lg: 8 },
+        // backgroundColor: "#f5f7fa",
+        // paddingX: { xs: 2, sm: 4, md: 6, lg:  8},
         paddingY: 4,
         position: "relative",
         boxSizing: "border-box",
@@ -243,16 +244,9 @@ export default function Meetings() {
         }}
       >
         <Box>
-          <Typography
-            sx={{
-              fontWeight: 700,
-              fontSize: { xs: 24, md: 28 },
-              color: "text.primary",
-              mb: 0.5,
-            }}
-          >
-            Meeting Management
-          </Typography>
+
+          <TextHeader text='Meeting Management'/>
+          
           <Typography
             sx={{
               color: "text.secondary",
@@ -269,8 +263,12 @@ export default function Meetings() {
       </Box>
 
       {/* Statistics Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
+      <Stack 
+        direction={{ xs: "column", sm: "row" }} 
+        spacing={3} 
+        sx={{ mb: 4 }}
+      >
+        <Box sx={{ flex: 1, minWidth: 0 }}>
           <StatCard
             title="Total Meetings"
             value={stats.total}
@@ -278,8 +276,8 @@ export default function Meetings() {
             color="#1976d2"
             subtitle="All scheduled meetings"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box sx={{ flex: 1, minWidth: 0 }}>
           <StatCard
             title="Pending"
             value={stats.pending}
@@ -287,8 +285,8 @@ export default function Meetings() {
             color="#ed6c02"
             subtitle="Awaiting decision"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box sx={{ flex: 1, minWidth: 0 }}>
           <StatCard
             title="Accepted"
             value={stats.accepted}
@@ -296,8 +294,8 @@ export default function Meetings() {
             color="#2e7d32"
             subtitle="Confirmed meetings"
           />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </Box>
+        <Box sx={{ flex: 1, minWidth: 0 }}>
           <StatCard
             title="Declined"
             value={stats.declined}
@@ -305,8 +303,8 @@ export default function Meetings() {
             color="#d32f2f"
             subtitle="Not approved"
           />
-        </Grid>
-      </Grid>
+        </Box>
+      </Stack>
 
       {/* Filters and Search */}
       <MainCard sx={{ mb: 4 }}>

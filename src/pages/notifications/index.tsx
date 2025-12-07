@@ -2,6 +2,7 @@ import { CheckOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { Box, Button, Drawer, TextField, Typography } from '@mui/material';
 import CustomRadioBtn from 'components/CustomRadioBtn';
 import NotificationCard from 'components/NotificationCard';
+import TextHeader from 'components/Textheaders';
 import React, { useState } from 'react';
 import { primaryColor } from 'utils/appColors';
 
@@ -12,7 +13,11 @@ export default function Notifications() {
     const [selected, setSelected] = React.useState("accepted");
 
     return (
-        <Box>
+        <Box
+        sx={{
+            // px: 7,
+            mb: 3
+        }}>
             {/* Top Bar */}
             <Box
                 sx={{
@@ -23,10 +28,9 @@ export default function Notifications() {
                     py: 3,
                 }}
             >
-                {/* Left Text */}
-                <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
-                    Notifications
-                </Typography>
+
+                <TextHeader text={'Notifications'} />
+                
 
                 {/* Right Button */}
                 <Button

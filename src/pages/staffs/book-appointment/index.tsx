@@ -100,109 +100,110 @@ export default function BookAppointments() {
         setFormData({ purpose: "", meetingDate: "", priority: "Medium", duration: "30" });
     };
 
-    const StatCard = ({ 
-        title, 
-        value, 
-        icon, 
-        color, 
-        subtitle 
-    }: { 
-        title: string; 
-        value: string | number; 
-        icon: React.ReactNode; 
+    const StatCard = ({
+        title,
+        value,
+        icon,
+        color,
+        subtitle
+    }: {
+        title: string;
+        value: string | number;
+        icon: React.ReactNode;
         color: string;
         subtitle?: string;
     }) => (
         <Card
+            elevation={0}
             sx={{
-                p: 3,
-                borderRadius: 3,
+                p: 3.5,
+                borderRadius: 2,
                 height: "100%",
-                background: `linear-gradient(135deg, ${color}08 0%, ${color}03 100%)`,
-                border: `1px solid ${color}20`,
+                bgcolor: "background.paper",
+                border: "1px solid",
+                borderColor: "divider",
                 position: "relative",
                 overflow: "hidden",
-                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                transition: "all 0.2s ease-in-out",
                 "&:hover": {
-                    transform: "translateY(-4px)",
-                    boxShadow: `0 8px 24px ${color}25`,
-                    borderColor: `${color}40`,
+                    borderColor: color,
+                    boxShadow: `0 4px 12px ${color}15`,
                 },
-                "&::before": {
+                "&::after": {
                     content: '""',
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    right: 0,
-                    height: 4,
-                    background: `linear-gradient(90deg, ${color} 0%, ${color}80 100%)`,
+                    width: 3,
+                    height: "100%",
+                    bgcolor: color,
                 },
             }}
         >
-            <Stack direction="row" spacing={2.5} alignItems="flex-start" justifyContent="space-between">
-                <Box sx={{ flex: 1, zIndex: 1 }}>
-                    <Typography 
-                        variant="body2" 
-                        color="text.secondary" 
-                        sx={{ 
-                            mb: 1, 
-                            fontWeight: 600,
-                            textTransform: "uppercase",
-                            letterSpacing: 0.5,
-                            fontSize: 11,
+            <Stack spacing={2}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                            fontWeight: 500,
+                            fontSize: "0.875rem",
                         }}
                     >
                         {title}
                     </Typography>
-                    <Typography 
-                        variant="h3" 
-                        sx={{ 
-                            fontWeight: 800, 
-                            color: color, 
-                            mb: 0.5,
+                    <Box
+                        sx={{
+                            width: 48,
+                            height: 48,
+                            borderRadius: 1.5,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            bgcolor: `${color}10`,
+                            color: color,
+                        }}
+                    >
+                        {icon}
+                    </Box>
+                </Stack>
+                <Box>
+                    <Typography
+                        variant="h4"
+                        sx={{
+                            fontWeight: 700,
+                            color: "text.primary",
                             lineHeight: 1.2,
+                            mb: 0.5,
                         }}
                     >
                         {value}
                     </Typography>
                     {subtitle && (
-                        <Typography 
-                            variant="caption" 
+                        <Typography
+                            variant="caption"
                             color="text.secondary"
-                            sx={{ 
-                                fontWeight: 500,
-                                fontSize: 12,
+                            sx={{
+                                fontSize: "0.75rem",
                             }}
                         >
                             {subtitle}
                         </Typography>
                     )}
                 </Box>
-                <Avatar
-                    sx={{
-                        bgcolor: `${color}15`,
-                        color: color,
-                        width: 64,
-                        height: 64,
-                        border: `2px solid ${color}20`,
-                        boxShadow: `0 4px 12px ${color}20`,
-                    }}
-                >
-                    {icon}
-                </Avatar>
             </Stack>
         </Card>
     );
 
-    const InsightCard = ({ 
-        title, 
-        value, 
-        icon, 
-        color = "primary" 
-    }: { 
-        title: string; 
-        value: string | number; 
-        icon: React.ReactNode; 
+    const InsightCard = ({
+        title,
+        value,
+        icon,
+        color = "primary"
+    }: {
+        title: string;
+        value: string | number;
+        icon: React.ReactNode;
         color?: string;
     }) => {
         const colorMap: Record<string, string> = {
@@ -212,54 +213,69 @@ export default function BookAppointments() {
             primary: "#1976d2",
         };
         const cardColor = colorMap[color] || color;
-        
+
         return (
             <Card
+                elevation={0}
                 sx={{
-                    p: 2.5,
-                    borderRadius: 3,
+                    p: 3.5,
+                    borderRadius: 2,
                     height: "100%",
-                    background: `linear-gradient(135deg, ${cardColor}08 0%, ${cardColor}03 100%)`,
-                    border: `1px solid ${cardColor}20`,
+                    bgcolor: "background.paper",
+                    border: "1px solid",
+                    borderColor: "divider",
                     position: "relative",
-                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    overflow: "hidden",
+                    transition: "all 0.2s ease-in-out",
                     "&:hover": {
-                        transform: "translateY(-4px)",
-                        boxShadow: `0 8px 24px ${cardColor}25`,
-                        borderColor: `${cardColor}40`,
+                        borderColor: cardColor,
+                        boxShadow: `0 4px 12px ${cardColor}15`,
+                    },
+                    "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: 3,
+                        height: "100%",
+                        bgcolor: cardColor,
                     },
                 }}
             >
-                <Stack direction="row" spacing={2.5} alignItems="center">
-                    <Avatar 
-                        sx={{ 
-                            bgcolor: `${cardColor}15`, 
-                            color: cardColor, 
-                            width: 56, 
-                            height: 56,
-                            border: `2px solid ${cardColor}20`,
-                            boxShadow: `0 4px 12px ${cardColor}20`,
-                        }}
-                    >
-                        {icon}
-                    </Avatar>
-                    <Box sx={{ flex: 1 }}>
-                        <Typography 
-                            variant="body2" 
-                            color="text.secondary" 
-                            sx={{ 
-                                mb: 0.75,
-                                fontWeight: 600,
-                                fontSize: 12,
+                <Stack spacing={2}>
+                    <Stack direction="row" alignItems="center" justifyContent="space-between">
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{
+                                fontWeight: 500,
+                                fontSize: "0.875rem",
                             }}
                         >
                             {title}
                         </Typography>
-                        <Typography 
-                            variant="h4" 
-                            sx={{ 
-                                fontWeight: 700,
+                        <Box
+                            sx={{
+                                width: 48,
+                                height: 48,
+                                borderRadius: 1.5,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                bgcolor: `${cardColor}10`,
                                 color: cardColor,
+                            }}
+                        >
+                            {icon}
+                        </Box>
+                    </Stack>
+                    <Box>
+                        <Typography
+                            variant="h4"
+                            sx={{
+                                fontWeight: 700,
+                                color: "text.primary",
+                                lineHeight: 1.2,
                             }}
                         >
                             {value}
@@ -335,8 +351,12 @@ export default function BookAppointments() {
             </Box>
 
             {/* Statistics Cards */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12} sm={6} md={3}>
+            <Stack 
+                direction={{ xs: "column", sm: "row" }} 
+                spacing={3} 
+                sx={{ mb: 4 }}
+            >
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                     <StatCard
                         title="Total Bookings"
                         value={stats.total}
@@ -344,8 +364,8 @@ export default function BookAppointments() {
                         color="#1976d2"
                         subtitle="All time requests"
                     />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                </Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                     <StatCard
                         title="Pending"
                         value={stats.pending}
@@ -353,8 +373,8 @@ export default function BookAppointments() {
                         color="#ed6c02"
                         subtitle="Awaiting response"
                     />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                </Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                     <StatCard
                         title="Accepted"
                         value={stats.accepted}
@@ -362,8 +382,8 @@ export default function BookAppointments() {
                         color="#2e7d32"
                         subtitle="Confirmed meetings"
                     />
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                </Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                     <StatCard
                         title="Declined"
                         value={stats.declined}
@@ -371,36 +391,40 @@ export default function BookAppointments() {
                         color="#d32f2f"
                         subtitle="Not approved"
                     />
-                </Grid>
-            </Grid>
+                </Box>
+            </Stack>
 
             {/* Insights Section */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12} md={4}>
+            <Stack 
+                direction={{ xs: "column", md: "row" }} 
+                spacing={3} 
+                sx={{ mb: 4 }}
+            >
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                     <InsightCard
                         title="Success Rate"
                         value={`${stats.successRate}%`}
                         icon={<TrophyOutlined style={{ fontSize: 24 }} />}
                         color="success"
                     />
-                </Grid>
-                <Grid item xs={12} md={4}>
+                </Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                     <InsightCard
                         title="Avg Response Time"
                         value={stats.avgResponseTime}
                         icon={<ClockCircleOutlined style={{ fontSize: 24 }} />}
                         color="warning"
                     />
-                </Grid>
-                <Grid item xs={12} md={4}>
+                </Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                     <InsightCard
                         title="This Month"
                         value={stats.total}
                         icon={<BarChartOutlined style={{ fontSize: 24 }} />}
                         color="info"
                     />
-                </Grid>
-            </Grid>
+                </Box>
+            </Stack>
 
 
 
@@ -472,54 +496,42 @@ export default function BookAppointments() {
                                                 row.priority === "High"
                                                     ? "error"
                                                     : row.priority === "Medium"
-                                                    ? "warning"
-                                                    : "default"
+                                                        ? "warning"
+                                                        : "default"
                                             }
                                             sx={{ fontWeight: 500 }}
                                         />
                                     </TableCell>
                                     <TableCell align="center">
-                                        <Stack
-                                            direction="row"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                            spacing={1}
+                                        
+
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                gap: 1,
+                                            }}
                                         >
+                                            {/* Status Dot */}
                                             <Box
                                                 sx={{
-                                                    width: 8,
-                                                    height: 8,
+                                                    width: 7,
+                                                    height: 7,
                                                     borderRadius: "50%",
                                                     backgroundColor: getStatusStyle(row.status).color,
-                                                    boxShadow: `0 0 8px ${getStatusStyle(row.status).color}60`,
                                                 }}
                                             />
-                                            <Chip
-                                                label={row.status}
-                                                size="small"
-                                                icon={
-                                                    row.status.toLowerCase() === "accepted" ? (
-                                                        <CheckCircleOutlined style={{ fontSize: 14 }} />
-                                                    ) : row.status.toLowerCase() === "pending" ? (
-                                                        <ClockCircleOutlined style={{ fontSize: 14 }} />
-                                                    ) : (
-                                                        <CloseCircleOutlined style={{ fontSize: 14 }} />
-                                                    )
-                                                }
-                                                sx={{
-                                                    backgroundColor: getStatusStyle(row.status).backgroundColor,
-                                                    color: getStatusStyle(row.status).color,
-                                                    fontWeight: 600,
-                                                    fontSize: 12,
-                                                    height: 28,
-                                                    border: `1px solid ${getStatusStyle(row.status).color}30`,
-                                                    boxShadow: `0 2px 8px ${getStatusStyle(row.status).color}15`,
-                                                    "& .MuiChip-icon": {
-                                                        color: getStatusStyle(row.status).color,
-                                                    },
-                                                }}
-                                            />
-                                        </Stack>
+
+                                            {/* Status Text */}
+                                            <Typography sx={{
+                                                fontSize: 14,
+                                                fontWeight: 500,
+                                                color: getStatusStyle(row.status).color
+                                            }}>
+                                                {row.status}
+                                            </Typography>
+                                        </Box>
                                     </TableCell>
                                 </TableRow>
                             ))}
