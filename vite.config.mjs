@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
   return {
     // base: isDev ? '/' : API_URL,
     // base: API_URL,
-    base: "/kofi-demo/",
+    base: "/kofi-demo",
     server: {
       open: true,
       port: PORT,
