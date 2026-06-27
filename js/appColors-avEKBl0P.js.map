@@ -1,0 +1,1 @@
+{"version":3,"file":"appColors-avEKBl0P.js","sources":["../../src/utils/appColors.tsx"],"sourcesContent":["\r\nexport const primaryColor = \"#1976d2\";\r\nexport const danger = \"#dc004e\";\r\nexport const success = \"#2e7d32\";"],"names":["primaryColor","danger"],"mappings":"AACO,MAAMA,EAAe,UACfC,EAAS"}
